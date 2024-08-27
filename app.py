@@ -74,7 +74,7 @@ def generate_name_suggestions(company_info, num_names=10, language="en"):
     end = generated_text.rfind("]") + 1
     companies_list = ast.literal_eval(generated_text[start:end])
     
-    return filter_similar_names(companies_list, existing_names)
+    return filter_similar_names(companies_list, existing_companies)
 
 def generate_updated_name(similar_name, language="en"):
     """Generate a slightly updated version of a similar name using Gemini API."""
