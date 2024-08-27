@@ -109,7 +109,7 @@ def generate_updated_name(similar_name, language="en"):
 def main():
     # Load logo
     #logo_url = "https://pbs.twimg.com/profile_images/981174159366590465/9IwSbo4D_400x400.jpg"
-    logo_url = "https://protocol.shj.ae/PublishingImages/3.png"
+    logo_url = "https://protocol.shj.ae/Style%20Library/Age/images/sharjahgov.png"
     response = requests.get(logo_url)
     logo = BytesIO(response.content)
 
