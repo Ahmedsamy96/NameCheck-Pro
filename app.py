@@ -127,7 +127,6 @@ def main():
             }}
         </style>
         <div class="logo">
-            # Define text for both languages
             <img src="{logo_url2}" alt="Logo">
         </div>
         """,
@@ -148,7 +147,8 @@ def main():
         unsafe_allow_html=True
     )
     st.sidebar.write("Sharjah Department of Economic Development © 2021 2023")
-    
+
+    # Define text for both languages
     # Language selection
     language = st.selectbox("Select Language / اختر اللغة", ("English", "العربية"))
     text = {
