@@ -54,6 +54,7 @@ def generate_name_suggestions(company_info, num_names=10, language="en"):
     model = genai.GenerativeModel("gemini-pro")
     
     if language == "ar":
+        st.write("Detected arabic")
         prompt = (f"Q: اقترح 7 إلى 10 أسماء شركات فريدة بناءً على المعلومات التالية:\n"
                   f"A: الصناعة: {company_info['industry']}\n"
                   f"A: الميزة الفريدة: {company_info['unique_feature']}\n"
