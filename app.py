@@ -100,37 +100,77 @@ def generate_updated_name(similar_name, language="en"):
     return filter_similar_names(updated_names_list, existing_companies)
 
 def main():
-    st.title("Company Name Availability Checker & Generator")
-    st.write("Enter a proposed company name to check its availability and get suggestions if it's taken.")
+    # Language selection
+    language = st.selectbox("Select Language / اختر اللغة", ("English", "العربية"))
+
+    # Define text for both languages
+    text = {
+        "English": {
+            "title": "Company Name Availability Checker & Generator",
+            "instruction": "Enter a proposed company name to check its availability and get suggestions if it's taken.",
+            "proposed_name": "Enter the proposed company name:",
+            "name_taken": "The proposed name is taken or similar to an existing company name.",
+            "similar_names": "Here are some similar names that are already taken:",
+            "generating_names": "Generating updated names based on similar names...",
+            "updated_suggestions": "Updated name suggestions for",
+            "additional_info": "To help generate better names, please answer the following questions:",
+            "industry": "Enter the industry of your company:",
+            "unique_feature": "Enter a unique feature of your company:",
+            "suggested_names": "Here are some suggested names for your new company:",
+            "no_suggestions": "Sorry, we couldn't generate any new names at the moment.",
+            "name_available": "The proposed name is available. You can use it for your new company."
+        },
+        "العربية": {
+            "title": "مدقق ومولد توفر أسماء الشركات",
+            "instruction": "أدخل الاسم المقترح للشركة للتحقق من توفره والحصول على اقتراحات إذا كان الاسم مستخدمًا.",
+            "proposed_name": "أدخل الاسم المقترح للشركة:",
+            "name_taken": "الاسم المقترح مستخدم أو مشابه لاسم شركة موجودة.",
+            "similar_names": "إليك بعض الأسماء المشابهة التي تم استخدامها بالفعل:",
+            "generating_names": "جارٍ إنشاء أسماء محدثة بناءً على الأسماء المشابهة...",
+            "updated_suggestions": "اقتراحات أسماء محدثة لـ",
+            "additional_info": "للمساعدة في إنشاء أسماء أفضل، يرجى الإجابة على الأسئلة التالية:",
+            "industry": "أدخل مجال عمل شركتك:",
+            "unique_feature": "أدخل ميزة فريدة لشركتك:",
+            "suggested_names": "إليك بعض الأسماء المقترحة لشركتك الجديدة:",
+            "no_suggestions": "عذرًا، لم نتمكن من إنشاء أي أسماء جديدة في الوقت الحالي.",
+            "name_available": "الاسم المقترح متاح. يمكنك استخدامه لشركتك الجديدة."
+        }
+    }
+
+    # Set the current language
+    lang = text[language]
+
+    st.title(lang["title"])
+    st.write(lang["instruction"])
 
     # Step 1: User input for proposed company name
-    proposed_name = st.text_input("Enter the proposed company name:")
+    proposed_name = st.text_input(lang["proposed_name"])
 
     if proposed_name:
         # Detect the language of the proposed name
-        language = "ar" if is_arabic(proposed_name) else "en"
+        name_language = "ar" if is_arabic(proposed_name) else "en"
 
         # Step 2: Check if the name is accepted or taken
         similar_names = check_name_availability(proposed_name, existing_companies)
         
         if similar_names:
             # Name is taken, display similar names
-            st.warning("The proposed name is taken or similar to an existing company name.")
-            st.write("Here are some similar names that are already taken:")
+            st.warning(lang["name_taken"])
+            st.write(lang["similar_names"])
             st.write(similar_names)
             
             # Generate updated names based on similar names
-            st.info("Generating updated names based on similar names...")
+            st.info(lang["generating_names"])
             for similar_name in similar_names:
-                updated_names = generate_updated_name(similar_name, language=language)
+                updated_names = generate_updated_name(similar_name, language=name_language)
                 if updated_names:
-                    st.write(f"Updated name suggestions for '{similar_name}':")
+                    st.write(f"{lang['updated_suggestions']} '{similar_name}':")
                     st.write(updated_names)
 
             # Step 3: Ask for additional information to generate new name suggestions
-            st.write("To help generate better names, please answer the following questions:")
-            industry = st.text_input("Enter the industry of your company:" if language == "en" else "أدخل مجال عمل شركتك:")
-            unique_feature = st.text_input("Enter a unique feature of your company:" if language == "en" else "أدخل ميزة فريدة لشركتك:")
+            st.write(lang["additional_info"])
+            industry = st.text_input(lang["industry"])
+            unique_feature = st.text_input(lang["unique_feature"])
 
             if industry and unique_feature:
                 company_info = {
@@ -139,15 +179,15 @@ def main():
                 }
                 
                 # Generate and display new name suggestions
-                suggestions = generate_name_suggestions(company_info, language=language)
+                suggestions = generate_name_suggestions(company_info, language=name_language)
                 if suggestions:
-                    st.success("Here are some suggested names for your new company:" if language == "en" else "إليك بعض الأسماء المقترحة لشركتك الجديدة:")
+                    st.success(lang["suggested_names"])
                     st.write(suggestions)
                 else:
-                    st.error("Sorry, we couldn't generate any new names at the moment." if language == "en" else "عذرًا، لم نتمكن من توليد أي أسماء جديدة في الوقت الحالي.")
+                    st.error(lang["no_suggestions"])
         else:
             # Name is available
-            st.success("The proposed name is available. You can use it for your new company." if language == "en" else "الاسم المقترح متاح. يمكنك استخدامه لشركتك الجديدة.")
+            st.success(lang["name_available"])
 
 if __name__ == "__main__":
     main()
