@@ -1,8 +1,7 @@
 import difflib
-import ast
+import re
 import streamlit as st
 import google.generativeai as genai
-import re
 
 # Access the API key from secrets
 Api_key = st.secrets["Api_key"]
@@ -49,12 +48,21 @@ def filter_similar_names(generated_names, existing_names):
             filtered_names.append(generated_name)
     return filtered_names
 
+def extract_list_from_text(text):
+    """Extract a list of strings from a text using regular expressions."""
+    pattern = r'\[(.*?)\]'
+    match = re.search(pattern, text, re.DOTALL)
+    if match:
+        items = match.group(1).split(',')
+        items = [item.strip().strip("'\"") for item in items]
+        return items
+    return []
+
 def generate_name_suggestions(company_info, num_names=10, language="en"):
     """Generate name suggestions using Gemini API."""
     model = genai.GenerativeModel("gemini-pro")
     
     if language == "ar":
-        st.write("Detected arabic")
         prompt = (f"Q: اقترح 7 إلى 10 أسماء شركات فريدة بناءً على المعلومات التالية:\n"
                   f"A: الصناعة: {company_info['industry']}\n"
                   f"A: الميزة الفريدة: {company_info['unique_feature']}\n"
@@ -65,14 +73,12 @@ def generate_name_suggestions(company_info, num_names=10, language="en"):
                   f"A: Industry: {company_info['industry']}\n"
                   f"A: Unique Feature: {company_info['unique_feature']}\n"
                   f"Generate names that are creative and appropriate for a company in this industry.\n"
-                  f"Return a python list of the Generated Names.")
+                  f"Return a python list of the generated names.")
     
     response = model.generate_content(prompt)
     generated_text = response.text
 
-    start = generated_text.find("[")
-    end = generated_text.rfind("]") + 1
-    companies_list = ast.literal_eval(generated_text[start:end])
+    companies_list = extract_list_from_text(generated_text)
     
     return filter_similar_names(companies_list, existing_companies)
 
@@ -94,9 +100,7 @@ def generate_updated_name(similar_name, language="en"):
     response = model.generate_content(prompt)
     generated_text = response.text
 
-    start = generated_text.find("[")
-    end = generated_text.rfind("]") + 1
-    updated_names_list = ast.literal_eval(generated_text[start:end])
+    updated_names_list = extract_list_from_text(generated_text)
     
     return filter_similar_names(updated_names_list, existing_companies)
 
