@@ -105,6 +105,17 @@ def generate_updated_name(similar_name, language="en"):
     return filter_similar_names(updated_names_list, existing_companies)
 
 def main():
+    # Load logo
+    logo_url = "https://pbs.twimg.com/profile_images/981174159366590465/9IwSbo4D_400x400.jpg"
+    response = requests.get(logo_url)
+    logo = BytesIO(response.content)
+
+    # Sidebar with logo and app info
+    st.sidebar.image(logo, width=150)
+    st.sidebar.title("Company Name Checker")
+    st.sidebar.write("Under the supervision of:")
+    st.sidebar.write("Sharjah Department of Economic Development © 2021 2023")
+    
     # Language selection
     language = st.selectbox("Select Language / اختر اللغة", ("English", "العربية"))
 
@@ -145,6 +156,7 @@ def main():
     # Set the current language
     lang = text[language]
 
+    # Main App Title
     st.title(lang["title"])
     st.write(lang["instruction"])
 
@@ -193,6 +205,6 @@ def main():
         else:
             # Name is available
             st.success(lang["name_available"])
-
+            
 if __name__ == "__main__":
     main()
