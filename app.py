@@ -139,7 +139,8 @@ def main():
 
     # Sidebar with logo and app info
     st.sidebar.image(logo, width=200)
-    st.sidebar.title("SEDD")
+    url = "https://www.sedd.ae/web/sedd/home"
+    st.markdown("check out SEDD [link](%s)" % url)
     st.sidebar.write("Sharjah Department of Economic Development © 2021 2023")
     
     # Language selection
