@@ -10,39 +10,23 @@ Api_key = st.secrets["Api_key"]
 # Set up Gemini Model API key
 genai.configure(api_key=Api_key)
 
-# Sample list of existing company names
-existing_companies_en = [
-    "Tech Innovators Inc.",
-    "Global Solutions Ltd.",
-    "Bright Future Enterprises",
-    "Creative Minds LLC",
-    "NextGen Technologies",
-    "ADNOC", "DP World",
-    "Emirates Group",
-    "Emaar Properties",
-    "First Abu Dhabi Bank",
-    "Mubadala Investment Company",
-    "National Oil Company",
-    "Saudi Aramco",
-    "Dubai International Financial Centre",
-    "Abu Dhabi Commercial Bank"
-]
-
-existing_companies_ar = [
-    "شركة المبدعين التقنيين",
-    "حلول عالمية",
-    "مستقبل مشرق",
-    "عقول مبتكرة",
-    "تقنيات الجيل القادم",
-    "أدنوك", "موانئ دبي العالمية",
-    "مجموعة الإمارات",
-    "إعمار العقارية",
-    "بنك أبوظبي الأول",
-    "شركة مبادلة للاستثمار",
-    "شركة النفط الوطنية",
-    "أرامكو السعودية",
-    "مركز دبي المالي العالمي",
-    "بنك أبوظبي التجاري"
+# Combined list of existing company names in both Arabic and English
+existing_companies = [
+    "Tech Innovators Inc.", "شركة المبدعين التقنيين",
+    "Global Solutions Ltd.", "حلول عالمية",
+    "Bright Future Enterprises", "مستقبل مشرق",
+    "Creative Minds LLC", "عقول مبتكرة",
+    "NextGen Technologies", "تقنيات الجيل القادم",
+    "ADNOC", "أدنوك",
+    "DP World", "موانئ دبي العالمية",
+    "Emirates Group", "مجموعة الإمارات",
+    "Emaar Properties", "إعمار العقارية",
+    "First Abu Dhabi Bank", "بنك أبوظبي الأول",
+    "Mubadala Investment Company", "شركة مبادلة للاستثمار",
+    "National Oil Company", "شركة النفط الوطنية",
+    "Saudi Aramco", "أرامكو السعودية",
+    "Dubai International Financial Centre", "مركز دبي المالي العالمي",
+    "Abu Dhabi Commercial Bank", "بنك أبوظبي التجاري"
 ]
 
 def is_arabic(text):
@@ -89,7 +73,7 @@ def generate_name_suggestions(company_info, num_names=10, language="en"):
     end = generated_text.rfind("]") + 1
     companies_list = ast.literal_eval(generated_text[start:end])
     
-    return filter_similar_names(companies_list, existing_companies_ar if language == "ar" else existing_companies_en)
+    return filter_similar_names(companies_list, existing_names)
 
 def generate_updated_name(similar_name, language="en"):
     """Generate a slightly updated version of a similar name using Gemini API."""
@@ -113,7 +97,7 @@ def generate_updated_name(similar_name, language="en"):
     end = generated_text.rfind("]") + 1
     updated_names_list = ast.literal_eval(generated_text[start:end])
     
-    return filter_similar_names(updated_names_list, existing_companies_ar if language == "ar" else existing_companies_en)
+    return filter_similar_names(updated_names_list, existing_companies)
 
 def main():
     st.title("Company Name Availability Checker & Generator")
@@ -127,7 +111,7 @@ def main():
         language = "ar" if is_arabic(proposed_name) else "en"
 
         # Step 2: Check if the name is accepted or taken
-        similar_names = check_name_availability(proposed_name, existing_companies_ar if language == "ar" else existing_companies_en)
+        similar_names = check_name_availability(proposed_name, existing_companies)
         
         if similar_names:
             # Name is taken, display similar names
