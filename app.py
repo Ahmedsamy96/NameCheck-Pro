@@ -51,7 +51,7 @@ def generate_name_suggestions(company_info, num_names=10):
     prompt = (f"Q: Generate 7 to 10 unique company names based on the following information:\n"
               f"A: Industry: {company_info['industry']}\n"
               f"A: Unique Feature: {company_info['unique_feature']}\n"
-              f"Generate names that are creative and appropriate for a company in this industry.(In same language of inserted company name) \n"
+              f"Generate names that are creative and appropriate for a company in this industry.\n"
               f"Return a python list of the Generated Names.")
     
     response = model.generate_content(prompt)
