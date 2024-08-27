@@ -108,12 +108,13 @@ def generate_updated_name(similar_name, language="en"):
 
 def main():
     # Load logo
-    logo_url = "https://pbs.twimg.com/profile_images/981174159366590465/9IwSbo4D_400x400.jpg"
+    #logo_url = "https://pbs.twimg.com/profile_images/981174159366590465/9IwSbo4D_400x400.jpg"
+    logo_url = "https://protocol.shj.ae/PublishingImages/3.png"
     response = requests.get(logo_url)
     logo = BytesIO(response.content)
 
     # Sidebar with logo and app info
-    st.sidebar.image(logo, width=100)
+    st.sidebar.image(logo, width=150)
     st.sidebar.title("SEDD")
     st.sidebar.write("Sharjah Department of Economic Development © 2021 2023")
     
