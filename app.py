@@ -14,6 +14,7 @@ existing_companies = [
     "Tech Innovators Inc.",
     "Global Solutions Ltd.",
     "Bright Future Enterprises",
+    "الشركة العربية المتحدة لصناعة اطارات السيارات",
     "Creative Minds LLC",
     "NextGen Technologies",
     "ADNOC", "DP World",
