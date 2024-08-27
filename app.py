@@ -63,11 +63,11 @@ def generate_name_suggestions(company_info, num_names=10, language="en"):
     model = genai.GenerativeModel("gemini-pro")
     
     if language == "ar":
-        prompt = (f"Q: اقترح 7 إلى 10 أسماء شركات فريدة بناءً على المعلومات التالية:\n"
+        prompt = (f"Q: اقترح 7 إلى 10 أسماء شركات باللغة العربية تكون فريدة بناءً على المعلومات التالية:\n"
                   f"A: الصناعة: {company_info['industry']}\n"
                   f"A: الميزة الفريدة: {company_info['unique_feature']}\n"
                   f"اقترح أسماء تكون مبتكرة ومناسبة لشركة في هذه الصناعة.\n"
-                  f"أعد قائمة بأسماء الشركات المقترحة في صيغة Python.")
+                  f"أعد قائمة بأسماء الشركات المقترحة في صيغة Python list.")
     else:
         prompt = (f"Q: Generate 7 to 10 unique company names based on the following information:\n"
                   f"A: Industry: {company_info['industry']}\n"
@@ -89,8 +89,8 @@ def generate_updated_name(similar_name, language="en"):
     if language == "ar":
         prompt = (f"Q: اقترح نسخة محدثة من الاسم التالي بحيث تكون مميزة ولكن لا تزال معروفة:\n"
                   f"A: اسم الشركة الأصلي: {similar_name}\n"
-                  f"اقترح أسماء تكون محدثة لاسم الشركة الأصلي.\n"
-                  f"أعد قائمة بالأسماء المقترحة في صيغة Python.")
+                  f"اقترح أسماء تكون باللغة العربية و محدثة لاسم الشركة الأصلي.\n"
+                  f"أعد قائمة بالأسماء المقترحة في صيغة Python list.")
     else:
         prompt = (f"Q: Provide an updated version of the following company name that is still recognizable but distinct:\n"
                   f"A: Original Company Name: {similar_name}\n"
