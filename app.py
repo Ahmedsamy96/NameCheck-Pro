@@ -127,6 +127,11 @@ def main():
             }}
         </style>
         <div class="logo">
+            # Language selection
+            language = st.selectbox("Select Language / اختر اللغة", ("English", "العربية"))
+            # Set the current language
+            lang = text[language]
+            # Define text for both languages
             <img src="{logo_url2}" alt="Logo">
         </div>
         """,
@@ -140,13 +145,10 @@ def main():
     # Sidebar with logo and app info
     st.sidebar.image(logo, width=200)
     url = "https://www.sedd.ae/web/sedd/home"
-    st.markdown("check out SEDD [link](%s)" % url)
+    st.sidebar("check out SEDD [link](%s)" % url)
     st.sidebar.write("Sharjah Department of Economic Development © 2021 2023")
     
-    # Language selection
-    language = st.selectbox("Select Language / اختر اللغة", ("English", "العربية"))
 
-    # Define text for both languages
     text = {
         "English": {
             "title": "Company Name Availability Checker & Generator",
@@ -180,8 +182,7 @@ def main():
         }
     }
 
-    # Set the current language
-    lang = text[language]
+
 
     # Main App Title
     st.title(lang["title"])
