@@ -110,11 +110,34 @@ def main():
     # Load logo
     #logo_url = "https://pbs.twimg.com/profile_images/981174159366590465/9IwSbo4D_400x400.jpg"
     logo_url = "https://protocol.shj.ae/Style%20Library/Age/images/sharjahgov.png"
+
+
+    st.markdown(
+    f"""
+    <style>
+        .logo {{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }}
+        .logo img {{
+            max-width: 100%;
+            height: auto;
+        }}
+    </style>
+    <div class="logo">
+        <img src="{logo_url}" alt="Logo">
+    </div>
+    """,
+    unsafe_allow_html=True
+    )
+    
     response = requests.get(logo_url)
     logo = BytesIO(response.content)
 
     # Sidebar with logo and app info
-    st.sidebar.image(logo, width=150)
+    st.sidebar.image(logo, width=200)
     st.sidebar.title("SEDD")
     st.sidebar.write("Sharjah Department of Economic Development © 2021 2023")
     
