@@ -107,11 +107,16 @@ def generate_updated_name(similar_name, language="en"):
     return filter_similar_names(updated_names_list, existing_companies)
 
 def main():
-    # Load logo
-    logo_url = "https://protocol.shj.ae/Style%20Library/Age/images/sharjahgov.png"
-    # Center the new logo
-    logo_url2 = "http://www.sedd.ae/o/sedd-theme-r2/images/theme/nav-logo-en.png"
-    
+    # Language selection
+    language = st.selectbox("Select Language / اختر اللغة", ("English", "العربية"))
+
+    # Set the logo URL based on the selected language
+    if language == "العربية":
+        logo_url2 = "http://www.sedd.ae/o/sedd-theme-r2/images/theme/nav-logo-ar.png"
+    else:
+        logo_url2 = "http://www.sedd.ae/o/sedd-theme-r2/images/theme/nav-logo-en.png"
+
+    # Center the logo
     st.markdown(
         f"""
         <style>
@@ -133,13 +138,13 @@ def main():
         unsafe_allow_html=True
     )
 
-    
+    # Load sidebar logo
+    logo_url = "https://protocol.shj.ae/Style%20Library/Age/images/sharjahgov.png"
     response = requests.get(logo_url)
     logo = BytesIO(response.content)
 
     # Sidebar with logo and app info
     st.sidebar.image(logo, width=200)
-    # Sidebar link
     st.sidebar.markdown(
         """
         [Visit Sharjah Department of Economic Development](https://www.sedd.ae/web/sedd/home)
@@ -149,8 +154,6 @@ def main():
     st.sidebar.write("Sharjah Department of Economic Development © 2021 2023")
 
     # Define text for both languages
-    # Language selection
-    language = st.selectbox("Select Language / اختر اللغة", ("English", "العربية"))
     text = {
         "English": {
             "title": "Company Name Availability Checker & Generator",
