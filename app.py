@@ -109,28 +109,30 @@ def generate_updated_name(similar_name, language="en"):
 def main():
     # Load logo
     logo_url = "https://protocol.shj.ae/Style%20Library/Age/images/sharjahgov.png"
-
-
+    # Center the new logo
+    logo_url2 = "http://www.sedd.ae/o/sedd-theme-r2/images/theme/nav-logo-en.png"
+    
     st.markdown(
-    f"""
-    <style>
-        .logo {{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-        }}
-        .logo img {{
-            max-width: 100%;
-            height: auto;
-        }}
-    </style>
-    <div class="logo">
-        <img src="{logo_url}" alt="Logo">
-    </div>
-    """,
-    unsafe_allow_html=True
+        f"""
+        <style>
+            .logo {{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 20px;
+            }}
+            .logo img {{
+                max-width: 100%;
+                height: auto;
+            }}
+        </style>
+        <div class="logo">
+            <img src="{logo_url2}" alt="Logo">
+        </div>
+        """,
+        unsafe_allow_html=True
     )
+
     
     response = requests.get(logo_url)
     logo = BytesIO(response.content)
