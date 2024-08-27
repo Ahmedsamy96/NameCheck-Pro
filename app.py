@@ -113,9 +113,8 @@ def main():
     logo = BytesIO(response.content)
 
     # Sidebar with logo and app info
-    st.sidebar.image(logo, width=150)
-    st.sidebar.title("Company Name Checker")
-    st.sidebar.write("Under the supervision of:")
+    st.sidebar.image(logo, width=100)
+    st.sidebar.title("SEDD")
     st.sidebar.write("Sharjah Department of Economic Development © 2021 2023")
     
     # Language selection
