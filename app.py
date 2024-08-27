@@ -12,6 +12,7 @@ genai.configure(api_key=Api_key)
 # Sample list of existing company names
 existing_companies = [
     "Tech Innovators Inc.",
+    "الشركة العربية المتحدة لصناعة الغزل و النسيج",
     "Global Solutions Ltd.",
     "Bright Future Enterprises",
     "Creative Minds LLC",
