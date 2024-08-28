@@ -115,7 +115,8 @@ def display_alerts(name_list):
         """
         <style>
         .alert {
-            display: inline-block;
+            display: flex;
+            flex-wrap: wrap;
             padding: 10px 15px;
             margin: 5px;
             border: 1px solid transparent;
