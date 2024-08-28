@@ -109,7 +109,7 @@ def generate_updated_name(similar_name, language="en"):
 
 
 def display_alerts(name_list):
-    """Display a list of names as styled alerts with random types that are auto-sized, rounded, and can be placed side by side."""
+    """Display a list of names as styled alerts with sequential types that are auto-sized, rounded, and displayed side by side."""
     # Define CSS styles for different alert types with auto-width, rounded corners, and inline-block display
     st.markdown(
         """
@@ -117,13 +117,14 @@ def display_alerts(name_list):
         .alert {
             display: inline-block;
             padding: 10px 15px;
-            margin: 10px;
+            margin: 5px;
             border: 1px solid transparent;
             border-radius: 20px;
             word-wrap: break-word;
             font-size: 16px;
             text-align: center;
             white-space: nowrap;
+            box-sizing: border-box;
         }
         .alert-info {
             background-color: #d9edf7;
@@ -153,9 +154,9 @@ def display_alerts(name_list):
     # List of available alert types
     alert_types = ["info", "success", "warning", "danger"]
     
-    # Display each name with a random alert style
-    for name in name_list:
-        alert_type = random.choice(alert_types)
+    # Display each name with a sequential alert style
+    for i, name in enumerate(name_list):
+        alert_type = alert_types[i % len(alert_types)]
         st.markdown(
             f"""
             <div class="alert alert-{alert_type}">
