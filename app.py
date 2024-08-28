@@ -106,6 +106,62 @@ def generate_updated_name(similar_name, language="en"):
     
     return filter_similar_names(updated_names_list, existing_companies)
 
+
+def display_alerts(name_list):
+    """Display a list of names as styled alerts with random types."""
+    # Define CSS styles for different alert types
+    st.markdown(
+        """
+        <style>
+        .alert {
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .alert-info {
+            background-color: #d9edf7;
+            color: #31708f;
+            border-color: #bce8f1;
+        }
+        .alert-success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border-color: #d6e9c6;
+        }
+        .alert-warning {
+            background-color: #fcf8e3;
+            color: #8a6d3b;
+            border-color: #faebcc;
+        }
+        .alert-danger {
+            background-color: #f2dede;
+            color: #a94442;
+            border-color: #ebccd1;
+        }
+        </style>
+        """, 
+        unsafe_allow_html=True
+    )
+    
+    # List of available alert types
+    alert_types = ["info", "success", "warning", "danger"]
+    
+    # Display each name with a random alert style
+    for name in name_list:
+        alert_type = random.choice(alert_types)
+        st.markdown(
+            f"""
+            <div class="alert alert-{alert_type}">
+                <strong>{name}</strong>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+
+
+
 def main():
     # Language selection
     language = st.selectbox("Select Language / اختر اللغة", ("English", "العربية"))
@@ -216,7 +272,8 @@ def main():
                 updated_names = generate_updated_name(similar_name, language=name_language)
                 if updated_names:
                     st.write(f"{lang['updated_suggestions']} '{similar_name}':")
-                    st.write(updated_names)
+                    display_alerts(updated_names)
+                    #st.write(updated_names)
 
             # Step 3: Ask for additional information to generate new name suggestions
             st.write(lang["additional_info"])
@@ -233,7 +290,8 @@ def main():
                 suggestions = generate_name_suggestions(company_info, language=name_language)
                 if suggestions:
                     st.success(lang["suggested_names"])
-                    st.write(suggestions)
+                    display_alerts(suggestions)
+                    #st.write(suggestions)
                 else:
                     st.error(lang["no_suggestions"])
         else:
