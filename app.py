@@ -1,7 +1,6 @@
 import difflib
 import requests
 from io import BytesIO
-import random
 import re
 import streamlit as st
 import google.generativeai as genai
@@ -109,62 +108,63 @@ def generate_updated_name(similar_name, language="en"):
 
 
 def display_alerts(name_list):
-    """Display a list of names as styled alerts with sequential types that are auto-sized, rounded, and displayed side by side."""
-    # Define CSS styles for different alert types with auto-width, rounded corners, and inline-block display
+    """Display a list of names as styled alerts with sequential types, auto-sized, rounded, and side by side."""
+    # Define CSS styles
     st.markdown(
         """
         <style>
-        .alert {
-            display: inline-block;
-            padding: 10px 15px;
-            margin: 5px;
-            border: 1px solid transparent;
-            border-radius: 20px;
-            word-wrap: break-word;
-            font-size: 16px;
-            text-align: center;
-            white-space: nowrap;
-            box-sizing: border-box;
+        /* Container to hold all alerts side by side */
+        .alert-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
         }
+        /* Alert box styles */
+        .alert {
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            white-space: nowrap;
+            display: inline-block;
+        }
+        /* Different alert types */
         .alert-info {
-            background-color: #d9edf7;
-            color: #31708f;
-            border-color: #bce8f1;
+            background-color: #17a2b8;
         }
         .alert-success {
-            background-color: #dff0d8;
-            color: #3c763d;
-            border-color: #d6e9c6;
+            background-color: #28a745;
         }
         .alert-warning {
-            background-color: #fcf8e3;
-            color: #8a6d3b;
-            border-color: #faebcc;
+            background-color: #ffc107;
+            color: #212529;
         }
         .alert-danger {
-            background-color: #f2dede;
-            color: #a94442;
-            border-color: #ebccd1;
+            background-color: #dc3545;
         }
         </style>
-        """, 
+        """,
         unsafe_allow_html=True
     )
     
-    # List of available alert types
+    # List of alert types
     alert_types = ["info", "success", "warning", "danger"]
     
-    # Display each name with a sequential alert style
+    # Begin alert container
+    alert_container = '<div class="alert-container">'
+    
+    # Add each name inside an alert div
     for i, name in enumerate(name_list):
         alert_type = alert_types[i % len(alert_types)]
-        st.markdown(
-            f"""
-            <div class="alert alert-{alert_type}">
-                <strong>{name}</strong>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+        alert_container += f'<div class="alert alert-{alert_type}">{name}</div>'
+    
+    # End alert container
+    alert_container += '</div>'
+    
+    # Render the alerts
+    st.markdown(alert_container, unsafe_allow_html=True)
 
 
 
