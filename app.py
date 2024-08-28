@@ -109,16 +109,21 @@ def generate_updated_name(similar_name, language="en"):
 
 
 def display_alerts(name_list):
-    """Display a list of names as styled alerts with random types."""
-    # Define CSS styles for different alert types
+    """Display a list of names as styled alerts with random types that are auto-sized, rounded, and can be placed side by side."""
+    # Define CSS styles for different alert types with auto-width, rounded corners, and inline-block display
     st.markdown(
         """
         <style>
         .alert {
-            padding: 20px;
-            margin-bottom: 15px;
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 10px;
             border: 1px solid transparent;
-            border-radius: 4px;
+            border-radius: 20px;
+            word-wrap: break-word;
+            font-size: 16px;
+            text-align: center;
+            white-space: nowrap;
         }
         .alert-info {
             background-color: #d9edf7;
@@ -159,7 +164,6 @@ def display_alerts(name_list):
             """,
             unsafe_allow_html=True
         )
-
 
 
 
