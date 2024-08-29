@@ -109,64 +109,21 @@ def generate_updated_name(similar_name, language="en"):
 
 def display_alerts(name_list):
     """Display a list of names as styled alerts with sequential types, auto-sized, rounded, and side by side."""
-    # Define CSS styles
-    st.markdown(
-        """
-        <style>
-        /* Container to hold all alerts side by side */
-        .alert-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
-        }
-        /* Alert box styles */
-        .alert {
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 600;
-            color: #fff;
-            white-space: nowrap;
-            display: inline-block;
-        }
-        /* Different alert types */
-        .alert-info {
-            background-color: #a8d8e6; /* Lighter blue */
-        }
-        .alert-success {
-            background-color: #a8e6a1; /* Lighter green */
-        }
-        .alert-warning {
-            background-color: #ffeb99; /* Lighter yellow */
-            color: #212529;
-        }
-        .alert-danger {
-            background-color: #f5a6a6; /* Lighter red */
-        }
-
-
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
     
-    # List of alert types
-    alert_types = ["info", "success", "warning", "danger"]
+    # List of Streamlit alert functions
+    alert_functions = [st.info, st.success, st.warning, st.error]
     
-    # Begin alert container
-    alert_container = '<div class="alert-container">'
+    # Start a container to hold the alerts side by side
+    alert_container = st.container()
     
-    # Add each name inside an alert div
+    # Create columns to display alerts side by side
+    columns = alert_container.columns(len(name_list))
+    
+    # Add each name as an alert using the corresponding Streamlit function
     for i, name in enumerate(name_list):
-        alert_type = alert_types[i % len(alert_types)]
-        alert_container += f'<div class="alert alert-{alert_type}">{name}</div>'
-    
-    # End alert container
-    alert_container += '</div>'
-    
-    # Render the alerts
-    st.markdown(alert_container, unsafe_allow_html=True)
+        alert_func = alert_functions[i % len(alert_functions)]
+        with columns[i]:
+            alert_func(name)
 
 
 
