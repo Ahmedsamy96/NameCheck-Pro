@@ -274,7 +274,7 @@ def main():
         if similar_names:
             # Name is taken, display similar names
             st.warning(lang["name_taken"])
-            st.write(f"**{lang["similar_names"]}**")
+            st.write("**{}**".format(lang["similar_names"]))
             #Changed
             #st.write(similar_names)
             display_alerts(similar_names)
