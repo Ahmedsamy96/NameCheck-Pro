@@ -109,8 +109,8 @@ def generate_updated_name(similar_name, language="en"):
 
 def display_alerts(name_list):
     """Display a list of names as styled alerts with sequential types, auto-sized, rounded, and side by side."""
-    
-    # Define CSS styles for auto-sized alerts
+
+    # Define Streamlit-like CSS styles for auto-sized alerts
     st.markdown(
         """
         <style>
@@ -124,26 +124,29 @@ def display_alerts(name_list):
         /* Alert box styles */
         .alert {
             padding: 10px 20px;
-            border-radius: 25px;
+            border-radius: 5px;
             font-size: 16px;
-            font-weight: 600;
-            color: #fff;
+            font-weight: 400;
             display: inline-block;
             white-space: nowrap;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
         /* Different alert types */
         .alert-info {
-            background-color: #17a2b8;
+            background-color: #d1ecf1;
+            color: #0c5460;
         }
         .alert-success {
-            background-color: #28a745;
+            background-color: #d4edda;
+            color: #155724;
         }
         .alert-warning {
-            background-color: #ffc107;
-            color: #212529;
+            background-color: #fff3cd;
+            color: #856404;
         }
         .alert-danger {
-            background-color: #dc3545;
+            background-color: #f8d7da;
+            color: #721c24;
         }
         </style>
         """,
@@ -166,6 +169,7 @@ def display_alerts(name_list):
     
     # Render the alerts
     st.markdown(alert_container, unsafe_allow_html=True)
+
 
 
 
