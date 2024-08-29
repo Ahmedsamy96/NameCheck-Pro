@@ -133,8 +133,8 @@ def display_alerts(name_list):
         }
         /* Different alert types */
         .alert-info {
-            background-color: #d1ecf1;
-            color: #0c5460;
+            background-color: #e9f5fb;  /* Exact st.info background color */
+            color: #31708f;             /* Exact st.info text color */
         }
         .alert-success {
             background-color: #d4edda;
