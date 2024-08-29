@@ -154,7 +154,7 @@ def display_alerts(name_list):
     )
     
     # List of alert types
-    alert_types = ["info", "success", "warning", "danger"]
+    alert_types = ["info"]
     
     # Begin alert container
     alert_container = '<div class="alert-container">'
