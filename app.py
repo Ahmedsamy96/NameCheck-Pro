@@ -280,7 +280,9 @@ def main():
             display_alerts(similar_names)
             
             # Generate updated names based on similar names
-            st.info(lang["generating_names"])
+            #st.info(lang["generating_names"])
+            display_alerts(lang["generating_names"])
+            
             for similar_name in similar_names:
                 updated_names = generate_updated_name(similar_name, language=name_language)
                 if updated_names:
@@ -302,9 +304,8 @@ def main():
                 # Generate and display new name suggestions
                 suggestions = generate_name_suggestions(company_info, language=name_language)
                 if suggestions:
-                    st.success(lang["suggested_names"])
+                    st.write("**{}**".format(lang["suggested_names"]))
                     display_alerts(suggestions)
-                    #st.write(suggestions)
                 else:
                     st.error(lang["no_suggestions"])
         else:
