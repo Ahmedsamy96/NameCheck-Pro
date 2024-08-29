@@ -281,7 +281,7 @@ def main():
             
             # Generate updated names based on similar names
             #st.info(lang["generating_names"])
-            display_alerts(f"**{lang['generating_names']}**")
+            display_alerts([lang['generating_names']])
             
             for similar_name in similar_names:
                 updated_names = generate_updated_name(similar_name, language=name_language)
