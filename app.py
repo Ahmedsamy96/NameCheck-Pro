@@ -113,16 +113,15 @@ def display_alerts(name_list):
     # List of Streamlit alert functions
     alert_functions = [st.info, st.success, st.warning, st.error]
     
-    # Start a container to hold the alerts side by side
+    # Container for holding alerts
     alert_container = st.container()
-    
-    # Create columns to display alerts side by side
-    columns = alert_container.columns(len(name_list))
     
     # Add each name as an alert using the corresponding Streamlit function
     for i, name in enumerate(name_list):
         alert_func = alert_functions[i % len(alert_functions)]
-        with columns[i]:
+        
+        # Use a container for each alert to control width automatically based on content
+        with alert_container:
             alert_func(name)
 
 
