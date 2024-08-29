@@ -132,18 +132,19 @@ def display_alerts(name_list):
         }
         /* Different alert types */
         .alert-info {
-            background-color: #85d1de;
+            background-color: #a8d8e6; /* Lighter blue */
         }
         .alert-success {
-            background-color: #69c587;
+            background-color: #a8e6a1; /* Lighter green */
         }
         .alert-warning {
-            background-color: #ffe08a;
+            background-color: #ffeb99; /* Lighter yellow */
             color: #212529;
         }
         .alert-danger {
-            background-color: #f28a94;
+            background-color: #f5a6a6; /* Lighter red */
         }
+
 
         </style>
         """,
