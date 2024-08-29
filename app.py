@@ -110,19 +110,62 @@ def generate_updated_name(similar_name, language="en"):
 def display_alerts(name_list):
     """Display a list of names as styled alerts with sequential types, auto-sized, rounded, and side by side."""
     
-    # List of Streamlit alert functions
-    alert_functions = [st.info, st.success, st.warning, st.error]
+    # Define CSS styles for auto-sized alerts
+    st.markdown(
+        """
+        <style>
+        /* Container to hold all alerts side by side */
+        .alert-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        /* Alert box styles */
+        .alert {
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        /* Different alert types */
+        .alert-info {
+            background-color: #17a2b8;
+        }
+        .alert-success {
+            background-color: #28a745;
+        }
+        .alert-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .alert-danger {
+            background-color: #dc3545;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
     
-    # Container for holding alerts
-    alert_container = st.container()
+    # List of alert types
+    alert_types = ["info", "success", "warning", "danger"]
     
-    # Add each name as an alert using the corresponding Streamlit function
+    # Begin alert container
+    alert_container = '<div class="alert-container">'
+    
+    # Add each name inside an alert div, with width based on content
     for i, name in enumerate(name_list):
-        alert_func = alert_functions[i % len(alert_functions)]
-        
-        # Use a container for each alert to control width automatically based on content
-        with alert_container:
-            alert_func(name)
+        alert_type = alert_types[i % len(alert_types)]
+        alert_container += f'<div class="alert alert-{alert_type}">{name}</div>'
+    
+    # End alert container
+    alert_container += '</div>'
+    
+    # Render the alerts
+    st.markdown(alert_container, unsafe_allow_html=True)
 
 
 
