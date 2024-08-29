@@ -126,22 +126,40 @@ def display_alerts(name_list):
             border-radius: 25px;
             font-size: 16px;
             font-weight: 600;
-            color: #212529;
-            background-color: #f8f9fa;
+            color: #fff;
             white-space: nowrap;
             display: inline-block;
         }
+        /* Different alert types */
+        .alert-info {
+            background-color: #85d1de;
+        }
+        .alert-success {
+            background-color: #69c587;
+        }
+        .alert-warning {
+            background-color: #ffe08a;
+            color: #212529;
+        }
+        .alert-danger {
+            background-color: #f28a94;
+        }
+
         </style>
         """,
         unsafe_allow_html=True
     )
     
+    # List of alert types
+    alert_types = ["info", "success", "warning", "danger"]
+    
     # Begin alert container
     alert_container = '<div class="alert-container">'
     
     # Add each name inside an alert div
-    for name in name_list:
-        alert_container += f'<div class="alert">{name}</div>'
+    for i, name in enumerate(name_list):
+        alert_type = alert_types[i % len(alert_types)]
+        alert_container += f'<div class="alert alert-{alert_type}">{name}</div>'
     
     # End alert container
     alert_container += '</div>'
@@ -221,68 +239,71 @@ def main():
             "proposed_name": "أدخل الاسم المقترح للشركة:",
             "name_taken": "الاسم المقترح مستخدم أو مشابه لاسم شركة موجودة.",
             "similar_names": "إليك بعض الأسماء المشابهة التي تم استخدامها بالفعل:",
-            "generating_names": "جاري إنشاء أسماء محدثة بناءً على الأسماء المشابهة...",
-            "updated_suggestions": "اقتراحات الأسماء المحدثة لـ",
-            "additional_info": "للمساعدة في إنشاء أسماء أفضل ، يرجى الإجابة على الأسئلة التالية:",
-            "industry": "أدخل صناعة شركتك:",
+            "generating_names": "جارٍ إنشاء أسماء محدثة بناءً على الأسماء المشابهة...",
+            "updated_suggestions": "اقتراحات أسماء محدثة لـ",
+            "additional_info": "للمساعدة في إنشاء أسماء أفضل، يرجى الإجابة على الأسئلة التالية:",
+            "industry": "أدخل مجال عمل شركتك:",
             "unique_feature": "أدخل ميزة فريدة لشركتك:",
             "suggested_names": "إليك بعض الأسماء المقترحة لشركتك الجديدة:",
-            "no_suggestions": "عذرًا ، لم نتمكن من توليد أي أسماء جديدة في الوقت الحالي.",
+            "no_suggestions": "عذرًا، لم نتمكن من إنشاء أي أسماء جديدة في الوقت الحالي.",
             "name_available": "الاسم المقترح متاح. يمكنك استخدامه لشركتك الجديدة."
         }
     }
 
-    # Get selected language texts
-    lang_texts = text["العربية"] if language == "العربية" else text["English"]
+    # Set the current language
+    lang = text[language]
 
-    # App title
-    st.title(lang_texts["title"])
+    # Main App Title
+    st.title(lang["title"])
+    st.write(lang["instruction"])
 
-    # Instruction
-    st.write(lang_texts["instruction"])
+    # Step 1: User input for proposed company name
+    proposed_name = st.text_input(lang["proposed_name"])
 
-    # Proposed company name input
-    proposed_name = st.text_input(lang_texts["proposed_name"]).strip()
-
-    # Check for similarity
     if proposed_name:
+        # Detect the language of the proposed name
+        name_language = "ar" if is_arabic(proposed_name) else "en"
+
+        # Step 2: Check if the name is accepted or taken
         similar_names = check_name_availability(proposed_name, existing_companies)
-
+        
         if similar_names:
-            st.warning(lang_texts["name_taken"])
-            st.write(lang_texts["similar_names"])
-            display_alerts(similar_names)
-
-            # Generate updated names based on similar names
-            st.write(lang_texts["generating_names"])
-
-            for similar_name in similar_names:
-                updated_names = generate_updated_name(similar_name, language="ar" if is_arabic(proposed_name) else "en")
-                
-                if updated_names:
-                    st.write(f"{lang_texts['updated_suggestions']} '{similar_name}':")
-                    display_alerts(updated_names)
-                else:
-                    st.write(lang_texts["no_suggestions"])
-        else:
-            st.success(lang_texts["name_available"])
-
-        st.write("------")
-        st.write(lang_texts["additional_info"])
-
-        # Additional questions for better name generation
-        industry = st.text_input(lang_texts["industry"]).strip()
-        unique_feature = st.text_input(lang_texts["unique_feature"]).strip()
-
-        if industry and unique_feature:
-            company_info = {"industry": industry, "unique_feature": unique_feature}
-            suggested_names = generate_name_suggestions(company_info, language="ar" if is_arabic(proposed_name) else "en")
+            # Name is taken, display similar names
+            st.warning(lang["name_taken"])
+            st.write(lang["similar_names"])
+            st.write(similar_names)
             
-            if suggested_names:
-                st.write(lang_texts["suggested_names"])
-                display_alerts(suggested_names)
-            else:
-                st.write(lang_texts["no_suggestions"])
+            # Generate updated names based on similar names
+            st.info(lang["generating_names"])
+            for similar_name in similar_names:
+                updated_names = generate_updated_name(similar_name, language=name_language)
+                if updated_names:
+                    st.write(f"{lang['updated_suggestions']} '{similar_name}':")
+                    display_alerts(updated_names)
+                    #st.write(updated_names)
 
+            # Step 3: Ask for additional information to generate new name suggestions
+            st.write(lang["additional_info"])
+            industry = st.text_input(lang["industry"])
+            unique_feature = st.text_input(lang["unique_feature"])
+
+            if industry and unique_feature:
+                company_info = {
+                    'industry': industry,
+                    'unique_feature': unique_feature
+                }
+                
+                # Generate and display new name suggestions
+                suggestions = generate_name_suggestions(company_info, language=name_language)
+                if suggestions:
+                    st.success(lang["suggested_names"])
+                    display_alerts(suggestions)
+                    #st.write(suggestions)
+                else:
+                    st.error(lang["no_suggestions"])
+        else:
+            # Name is available
+            st.success(lang["name_available"])
+            
 if __name__ == "__main__":
     main()
