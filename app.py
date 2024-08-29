@@ -275,7 +275,9 @@ def main():
             # Name is taken, display similar names
             st.warning(lang["name_taken"])
             st.write(lang["similar_names"])
-            st.write(similar_names)
+            #Changed
+            #st.write(similar_names)
+            st.write(display_alerts(similar_names))
             
             # Generate updated names based on similar names
             st.info(lang["generating_names"])
