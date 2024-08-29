@@ -129,7 +129,7 @@ def display_alerts(name_list):
             font-weight: 400;
             display: inline-block;
             white-space: nowrap;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); */
         }
         /* Different alert types */
         .alert-info {
