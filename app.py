@@ -274,17 +274,17 @@ def main():
         if similar_names:
             # Name is taken, display similar names
             st.warning(lang["name_taken"])
-            st.write(lang["similar_names"])
+            st.write(f"**{lang["similar_names"]**")
             #Changed
             #st.write(similar_names)
-            st.write(display_alerts(similar_names))
+            display_alerts(similar_names)
             
             # Generate updated names based on similar names
             st.info(lang["generating_names"])
             for similar_name in similar_names:
                 updated_names = generate_updated_name(similar_name, language=name_language)
                 if updated_names:
-                    st.write(f"{lang['updated_suggestions']} '{similar_name}':")
+                    st.write(f"**{lang['updated_suggestions']} '{similar_name}':**")
                     display_alerts(updated_names)
                     #st.write(updated_names)
 
