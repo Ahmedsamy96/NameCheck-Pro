@@ -44,6 +44,23 @@ existing_companies = [
     "Dubai International Financial Centre", "مركز دبي المالي العالمي",
     "Abu Dhabi Commercial Bank", "بنك أبوظبي التجاري"
 ]
+emirates_and_cities_en_ar = [
+    "أبوظبي", "العين", "الظفرة", "الرويس", "بني ياس", "الشهامة",
+    "دبي", "جبل علي", "الورقاء", "الراشدية",
+    "الشارقة", "خورفكان", "كلباء", "الذيد",
+    "عجمان", "المويهات", "الحميدية",
+    "أم القيوين", "السلمة", "الراشدية",
+    "رأس الخيمة", "الجزيرة الحمراء", "الرمس", "شعم",
+    "الفجيرة", "دبا الفجيرة", "مسافي", "قدفع",
+    "Abu Dhabi", "Al Ain", "Al Dhafra", "Al Ruwais", "Baniyas", "Al Shahama",
+    "Dubai", "Jebel Ali", "Al Warqa", "Al Rashidiya",
+    "Sharjah", "Khor Fakkan", "Kalba", "Al Dhaid",
+    "Ajman", "Al Mowaihat", "Al Hamidiya",
+    "Umm Al Quwain", "Al Salamah", "Al Rashidiya",
+    "Ras Al Khaimah", "Al Jazirah Al Hamra", "Al Rams", "Shaam",
+    "Fujairah", "Dibba Al Fujairah", "Masafi", "Qidfa"
+]
+
 
 # Combine fortune with existing
 Fortune_2000 = load_fortune_2000(file_path="https://raw.githubusercontent.com/Ahmedsamy96/NameCheck-Pro/main/Fortune_2000.csv")
