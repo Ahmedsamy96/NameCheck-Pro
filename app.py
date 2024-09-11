@@ -43,7 +43,7 @@ existing_companies = [
 ]
 
 # Combine fortune with existing
-Fortune_2000 = load_fortune_2000(file_path="https://github.com/Ahmedsamy96/NameCheck-Pro/blob/main/Fortune_2000.csv")
+Fortune_2000 = load_fortune_2000(file_path="https://raw.githubusercontent.com/Ahmedsamy96/NameCheck-Pro/main/Fortune_2000.csv")
 st.write(Fortune_2000)
 
 def is_arabic(text):
