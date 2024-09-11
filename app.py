@@ -11,7 +11,7 @@ Api_key = st.secrets["Api_key"]
 # Set up Gemini Model API key
 genai.configure(api_key=Api_key)
 
-def load_fortune_2000(file_path="Fortune_2001.csv"):
+def load_fortune_2000(file_path):
     """Loads the Fortune 2000 CSV file and returns a list of company names."""
     try:
         df = pd.read_csv(file_path)
@@ -43,7 +43,7 @@ existing_companies = [
 ]
 
 # Combine fortune with existing
-Fortune_2000 = load_fortune_2000(file_path="Fortune_2000.csv")
+Fortune_2000 = load_fortune_2000(file_path="https://github.com/Ahmedsamy96/NameCheck-Pro/blob/main/Fortune_2000.csv")
 st.write(Fortune_2000)
 
 def is_arabic(text):
