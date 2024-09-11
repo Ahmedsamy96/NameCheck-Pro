@@ -14,7 +14,6 @@ genai.configure(api_key=Api_key)
 def is_arabic(text):
     """Check if the text is Arabic based on Unicode range."""
     return bool(re.search(r'[\u0600-\u06FF]', text))
-#######################
 
 def load_fortune_2000(file_path="Fortune_2000.csv"):
     """Loads the Fortune 2000 CSV file and returns a list of company names."""
@@ -56,8 +55,6 @@ def get_combined_company_names(fortune_file_path="Fortune_2000.csv"):
     return set(existing_names + fortune_2000_names)  # Using set to avoid duplicates
 
 
-
-#######################
 def check_name_availability(proposed_name, fortune_file_path="Fortune_2000.csv"):
     """Checks if a proposed company name is similar to any existing companies."""
     existing_names = get_combined_company_names(fortune_file_path)
@@ -296,7 +293,8 @@ def main():
         name_language = "ar" if is_arabic(proposed_name) else "en"
 
         # Step 2: Check if the name is accepted or taken
-        similar_names = check_name_availability(proposed_name, existing_companies)
+        #similar_names = check_name_availability(proposed_name, existing_companies)
+        similar_names = check_name_availability(proposed_name, fortune_file_path="Fortune_2000.csv")
         
         if similar_names:
             # Name is taken, display similar names
