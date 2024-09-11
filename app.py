@@ -5,6 +5,7 @@ import re
 import streamlit as st
 import google.generativeai as genai
 from io import StringIO
+import pandas as pd
 
 # Access the API key from secrets
 Api_key = st.secrets["Api_key"]
