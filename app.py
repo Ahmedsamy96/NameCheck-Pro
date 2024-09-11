@@ -11,35 +11,65 @@ Api_key = st.secrets["Api_key"]
 # Set up Gemini Model API key
 genai.configure(api_key=Api_key)
 
-# Combined list of existing company names in both Arabic and English
-existing_companies = [
-    "Tech Innovators Inc.", "شركة المبدعين التقنيين",
-    "Global Solutions Ltd.", "حلول عالمية",
-    "Bright Future Enterprises", "مستقبل مشرق",
-    "Creative Minds LLC", "عقول مبتكرة",
-    "NextGen Technologies", "تقنيات الجيل القادم",
-    "ADNOC", "أدنوك",
-    "DP World", "موانئ دبي العالمية",
-    "Emirates Group", "مجموعة الإمارات",
-    "Emaar Properties", "إعمار العقارية",
-    "First Abu Dhabi Bank", "بنك أبوظبي الأول",
-    "Mubadala Investment Company", "شركة مبادلة للاستثمار",
-    "National Oil Company", "شركة النفط الوطنية",
-    "Saudi Aramco", "أرامكو السعودية",
-    "Dubai International Financial Centre", "مركز دبي المالي العالمي",
-    "Abu Dhabi Commercial Bank", "بنك أبوظبي التجاري"
-]
-
 def is_arabic(text):
     """Check if the text is Arabic based on Unicode range."""
     return bool(re.search(r'[\u0600-\u06FF]', text))
+#######################
+import pandas as pd
 
-def check_name_availability(proposed_name, existing_names):
-    """Check if the proposed name is already taken or similar to existing names."""
+def load_fortune_2000(file_path="Fortune_2000.csv"):
+    """Loads the Fortune 2000 CSV file and returns a list of company names."""
+    try:
+        df = pd.read_csv(file_path)
+        # Assuming the column containing company names is 'Company Name'
+        company_names = df['Company Name'].dropna().str.strip().str.lower().tolist()
+        return company_names
+    except Exception as e:
+        print(f"Error loading Fortune 2000 CSV: {e}")
+        return []
+
+def load_existing_company_names():
+    """Load existing company names from predefined sources or lists."""
+    # Add more sources of existing company names here
+    # Combined list of existing company names in both Arabic and English
+    existing_companies = [
+        "Tech Innovators Inc.", "شركة المبدعين التقنيين",
+        "Global Solutions Ltd.", "حلول عالمية",
+        "Bright Future Enterprises", "مستقبل مشرق",
+        "Creative Minds LLC", "عقول مبتكرة",
+        "NextGen Technologies", "تقنيات الجيل القادم",
+        "ADNOC", "أدنوك",
+        "DP World", "موانئ دبي العالمية",
+        "Emirates Group", "مجموعة الإمارات",
+        "Emaar Properties", "إعمار العقارية",
+        "First Abu Dhabi Bank", "بنك أبوظبي الأول",
+        "Mubadala Investment Company", "شركة مبادلة للاستثمار",
+        "National Oil Company", "شركة النفط الوطنية",
+        "Saudi Aramco", "أرامكو السعودية",
+        "Dubai International Financial Centre", "مركز دبي المالي العالمي",
+        "Abu Dhabi Commercial Bank", "بنك أبوظبي التجاري"
+    ]
+    return existing_companies
+
+def get_combined_company_names(fortune_file_path="Fortune_2000.csv"):
+    """Combine existing company names with Fortune 2000 names."""
+    existing_names = load_existing_company_names()
+    fortune_2000_names = load_fortune_2000(fortune_file_path)
+    # Combine both lists and return the result
+    return set(existing_names + fortune_2000_names)  # Using set to avoid duplicates
+
+
+
+#######################
+def check_name_availability(proposed_name, fortune_file_path="Fortune_2000.csv"):
+    """Checks if a proposed company name is similar to any existing companies."""
+    existing_names = get_combined_company_names(fortune_file_path)
+    
     similar_names = []
     for name in existing_names:
-        if difflib.SequenceMatcher(None, proposed_name, name).ratio() > 0.8:
+        if difflib.SequenceMatcher(None, proposed_name.lower(), name.lower()).ratio() > 0.8:
             similar_names.append(name)
+    
     return similar_names
 
 def filter_similar_names(generated_names, existing_names):
