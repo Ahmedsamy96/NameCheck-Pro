@@ -26,16 +26,7 @@ def load_fortune_2000(file_path):
         print(f"Error loading Fortune 2000 CSV: {e}")
         return []
 
-def load_fortune_2000(file_path):
-    """Loads the Fortune 2000 CSV file and returns a list of company names."""
-    response = requests.get(file_path)
-    if response.status_code == 200:
-        df = pd.read_csv(StringIO(response.text))
-        company_names = df['Name'].dropna().str.strip().str.lower().tolist()
-        return company_names    
-    else:
-        st.error("Failed to load data from GitHub.")
-        return None
+
 
 
 # Combined list of existing company names in both Arabic and English
