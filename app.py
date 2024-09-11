@@ -47,7 +47,8 @@ existing_companies = [
 
 # Combine fortune with existing
 Fortune_2000 = load_fortune_2000(file_path="https://raw.githubusercontent.com/Ahmedsamy96/NameCheck-Pro/main/Fortune_2000.csv")
-st.write(existing_companies.extend(Fortune_2000))
+existing_companies.extend(Fortune_2000)
+st.write(existing_companies)
 
 def is_arabic(text):
     """Check if the text is Arabic based on Unicode range."""
