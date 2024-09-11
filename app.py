@@ -43,8 +43,8 @@ existing_companies = [
 ]
 
 # Combine fortune with existing
-existing_companies = existing_companies + load_fortune_2000(file_path="Fortune_2000.csv")
-st.write(existing_companies)
+Fortune_2000 = load_fortune_2000(file_path="Fortune_2000.csv")
+st.write(Fortune_2000)
 
 def is_arabic(text):
     """Check if the text is Arabic based on Unicode range."""
