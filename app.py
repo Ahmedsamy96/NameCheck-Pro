@@ -48,6 +48,7 @@ existing_companies = [
 # Combine fortune with existing
 Fortune_2000 = load_fortune_2000(file_path="https://raw.githubusercontent.com/Ahmedsamy96/NameCheck-Pro/main/Fortune_2000.csv")
 existing_companies.extend(Fortune_2000)
+existing_companies = [company.lower() for company in existing_companies]
 
 def is_arabic(text):
     """Check if the text is Arabic based on Unicode range."""
@@ -281,7 +282,7 @@ def main():
     st.write(lang["instruction"])
 
     # Step 1: User input for proposed company name
-    proposed_name = st.text_input(lang["proposed_name"])
+    proposed_name = st.text_input(lang["proposed_name"]).lower()
 
     if proposed_name:
         # Detect the language of the proposed name
