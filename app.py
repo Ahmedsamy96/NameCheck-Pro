@@ -15,7 +15,6 @@ def is_arabic(text):
     """Check if the text is Arabic based on Unicode range."""
     return bool(re.search(r'[\u0600-\u06FF]', text))
 #######################
-import pandas as pd
 
 def load_fortune_2000(file_path="Fortune_2000.csv"):
     """Loads the Fortune 2000 CSV file and returns a list of company names."""
@@ -30,9 +29,7 @@ def load_fortune_2000(file_path="Fortune_2000.csv"):
 
 def load_existing_company_names():
     """Load existing company names from predefined sources or lists."""
-    # Add more sources of existing company names here
-    # Combined list of existing company names in both Arabic and English
-    existing_companies = [
+    existing_names = [
         "Tech Innovators Inc.", "شركة المبدعين التقنيين",
         "Global Solutions Ltd.", "حلول عالمية",
         "Bright Future Enterprises", "مستقبل مشرق",
@@ -49,7 +46,7 @@ def load_existing_company_names():
         "Dubai International Financial Centre", "مركز دبي المالي العالمي",
         "Abu Dhabi Commercial Bank", "بنك أبوظبي التجاري"
     ]
-    return existing_companies
+    return existing_names
 
 def get_combined_company_names(fortune_file_path="Fortune_2000.csv"):
     """Combine existing company names with Fortune 2000 names."""
