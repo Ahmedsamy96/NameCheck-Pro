@@ -11,9 +11,24 @@ Api_key = st.secrets["Api_key"]
 # Set up Gemini Model API key
 genai.configure(api_key=Api_key)
 
-def is_arabic(text):
-    """Check if the text is Arabic based on Unicode range."""
-    return bool(re.search(r'[\u0600-\u06FF]', text))
+# Combined list of existing company names in both Arabic and English
+existing_companies = [
+    "Tech Innovators Inc.", "شركة المبدعين التقنيين",
+    "Global Solutions Ltd.", "حلول عالمية",
+    "Bright Future Enterprises", "مستقبل مشرق",
+    "Creative Minds LLC", "عقول مبتكرة",
+    "NextGen Technologies", "تقنيات الجيل القادم",
+    "ADNOC", "أدنوك",
+    "DP World", "موانئ دبي العالمية",
+    "Emirates Group", "مجموعة الإمارات",
+    "Emaar Properties", "إعمار العقارية",
+    "First Abu Dhabi Bank", "بنك أبوظبي الأول",
+    "Mubadala Investment Company", "شركة مبادلة للاستثمار",
+    "National Oil Company", "شركة النفط الوطنية",
+    "Saudi Aramco", "أرامكو السعودية",
+    "Dubai International Financial Centre", "مركز دبي المالي العالمي",
+    "Abu Dhabi Commercial Bank", "بنك أبوظبي التجاري"
+]
 
 def load_fortune_2000(file_path="Fortune_2000.csv"):
     """Loads the Fortune 2000 CSV file and returns a list of company names."""
@@ -26,44 +41,21 @@ def load_fortune_2000(file_path="Fortune_2000.csv"):
         print(f"Error loading Fortune 2000 CSV: {e}")
         return []
 
-def load_existing_company_names():
-    """Load existing company names from predefined sources or lists."""
-    existing_names = [
-        "Tech Innovators Inc.", "شركة المبدعين التقنيين",
-        "Global Solutions Ltd.", "حلول عالمية",
-        "Bright Future Enterprises", "مستقبل مشرق",
-        "Creative Minds LLC", "عقول مبتكرة",
-        "NextGen Technologies", "تقنيات الجيل القادم",
-        "ADNOC", "أدنوك",
-        "DP World", "موانئ دبي العالمية",
-        "Emirates Group", "مجموعة الإمارات",
-        "Emaar Properties", "إعمار العقارية",
-        "First Abu Dhabi Bank", "بنك أبوظبي الأول",
-        "Mubadala Investment Company", "شركة مبادلة للاستثمار",
-        "National Oil Company", "شركة النفط الوطنية",
-        "Saudi Aramco", "أرامكو السعودية",
-        "Dubai International Financial Centre", "مركز دبي المالي العالمي",
-        "Abu Dhabi Commercial Bank", "بنك أبوظبي التجاري"
-    ]
-    return existing_names
 
-def get_combined_company_names(fortune_file_path="Fortune_2000.csv"):
-    """Combine existing company names with Fortune 2000 names."""
-    existing_names = load_existing_company_names()
-    fortune_2000_names = load_fortune_2000(fortune_file_path)
-    # Combine both lists and return the result
-    return set(existing_names + fortune_2000_names)  # Using set to avoid duplicates
+def is_arabic(text):
+    """Check if the text is Arabic based on Unicode range."""
+    return bool(re.search(r'[\u0600-\u06FF]', text))
 
+def check_name_availability(proposed_name, existing_names):
+    """Check if the proposed name is already taken or similar to existing names."""
 
-def check_name_availability(proposed_name, fortune_file_path="Fortune_2000.csv"):
-    """Checks if a proposed company name is similar to any existing companies."""
-    existing_names = get_combined_company_names(fortune_file_path)
+    # Combine fortune with existing
+    existing_names.extend(load_fortune_2000(file_path="Fortune_2000.csv"))
     
     similar_names = []
     for name in existing_names:
-        if difflib.SequenceMatcher(None, proposed_name.lower(), name.lower()).ratio() > 0.8:
+        if difflib.SequenceMatcher(None, proposed_name, name).ratio() > 0.8:
             similar_names.append(name)
-    
     return similar_names
 
 def filter_similar_names(generated_names, existing_names):
@@ -293,8 +285,7 @@ def main():
         name_language = "ar" if is_arabic(proposed_name) else "en"
 
         # Step 2: Check if the name is accepted or taken
-        #similar_names = check_name_availability(proposed_name, existing_companies)
-        similar_names = check_name_availability(proposed_name, fortune_file_path="Fortune_2000.csv")
+        similar_names = check_name_availability(proposed_name, existing_companies)
         
         if similar_names:
             # Name is taken, display similar names
