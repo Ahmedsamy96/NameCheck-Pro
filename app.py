@@ -18,9 +18,9 @@ def load_fortune_2000(file_path):
         # Assuming the column containing company names is 'Company Name'
         response = requests.get(file_path)
         if response.status_code == 200:
-        df = pd.read_csv(StringIO(response.text))
-        company_names = df['Name'].dropna().str.strip().str.lower().tolist()
-        return company_names
+            df = pd.read_csv(StringIO(response.text))
+            company_names = df['Name'].dropna().str.strip().str.lower().tolist()
+            return company_names
     except Exception as e:
         print(f"Error loading Fortune 2000 CSV: {e}")
         return []
