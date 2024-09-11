@@ -30,6 +30,10 @@ existing_companies = [
     "Abu Dhabi Commercial Bank", "بنك أبوظبي التجاري"
 ]
 
+# Combine fortune with existing
+existing_companies.extend(load_fortune_2000(file_path="Fortune_2000.csv"))
+st.write(existing_companies)
+
 def load_fortune_2000(file_path="Fortune_2000.csv"):
     """Loads the Fortune 2000 CSV file and returns a list of company names."""
     try:
@@ -47,11 +51,7 @@ def is_arabic(text):
     return bool(re.search(r'[\u0600-\u06FF]', text))
 
 def check_name_availability(proposed_name, existing_names):
-    """Check if the proposed name is already taken or similar to existing names."""
-
-    # Combine fortune with existing
-    existing_names.extend(load_fortune_2000(file_path="Fortune_2000.csv"))
-    
+    """Check if the proposed name is already taken or similar to existing names."""    
     similar_names = []
     for name in existing_names:
         if difflib.SequenceMatcher(None, proposed_name, name).ratio() > 0.8:
