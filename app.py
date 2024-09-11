@@ -43,7 +43,7 @@ existing_companies = [
 ]
 
 # Combine fortune with existing
-existing_companies.extend(load_fortune_2000(file_path="Fortune_2000.csv"))
+existing_companies = existing_companies + load_fortune_2000(file_path="Fortune_2000.csv")
 st.write(existing_companies)
 
 def is_arabic(text):
