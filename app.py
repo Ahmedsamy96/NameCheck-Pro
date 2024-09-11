@@ -11,6 +11,18 @@ Api_key = st.secrets["Api_key"]
 # Set up Gemini Model API key
 genai.configure(api_key=Api_key)
 
+def load_fortune_2000(file_path="Fortune_2000.csv"):
+    """Loads the Fortune 2000 CSV file and returns a list of company names."""
+    try:
+        df = pd.read_csv(file_path)
+        # Assuming the column containing company names is 'Company Name'
+        company_names = df['Company Name'].dropna().str.strip().str.lower().tolist()
+        return company_names
+    except Exception as e:
+        print(f"Error loading Fortune 2000 CSV: {e}")
+        return []
+
+
 # Combined list of existing company names in both Arabic and English
 existing_companies = [
     "Tech Innovators Inc.", "شركة المبدعين التقنيين",
@@ -33,18 +45,6 @@ existing_companies = [
 # Combine fortune with existing
 existing_companies.extend(load_fortune_2000(file_path="Fortune_2000.csv"))
 st.write(existing_companies)
-
-def load_fortune_2000(file_path="Fortune_2000.csv"):
-    """Loads the Fortune 2000 CSV file and returns a list of company names."""
-    try:
-        df = pd.read_csv(file_path)
-        # Assuming the column containing company names is 'Company Name'
-        company_names = df['Company Name'].dropna().str.strip().str.lower().tolist()
-        return company_names
-    except Exception as e:
-        print(f"Error loading Fortune 2000 CSV: {e}")
-        return []
-
 
 def is_arabic(text):
     """Check if the text is Arabic based on Unicode range."""
