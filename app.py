@@ -26,6 +26,7 @@ def load_fortune_2000(file_path):
         return []
 
 def load_fortune_2000(file_path):
+    """Loads the Fortune 2000 CSV file and returns a list of company names."""
     response = requests.get(file_path)
     if response.status_code == 200:
         df = pd.read_csv(StringIO(response.text))
@@ -35,12 +36,6 @@ def load_fortune_2000(file_path):
         st.error("Failed to load data from GitHub.")
         return None
 
-def load_original_data():
-    url = 'https://raw.githubusercontent.com/[username]/[repository]/main/[file].csv'
-
-    else:
-        st.error("Failed to load data from GitHub.")
-        return None
 
 # Combined list of existing company names in both Arabic and English
 existing_companies = [
