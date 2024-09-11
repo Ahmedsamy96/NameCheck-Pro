@@ -16,7 +16,7 @@ def load_fortune_2000(file_path="Fortune_2000.csv"):
     try:
         df = pd.read_csv(file_path)
         # Assuming the column containing company names is 'Company Name'
-        company_names = df['Company Name'].dropna().str.strip().str.lower().tolist()
+        company_names = df['Name'].dropna().str.strip().str.lower().tolist()
         return company_names
     except Exception as e:
         print(f"Error loading Fortune 2000 CSV: {e}")
