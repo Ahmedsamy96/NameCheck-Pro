@@ -6,6 +6,11 @@ import streamlit as st
 import google.generativeai as genai
 from io import StringIO
 import pandas as pd
+from spellchecker import SpellChecker
+
+# Initialize spell checkers
+english_spell = SpellChecker(language='en')
+arabic_spell = SpellChecker(language='ar')
 
 # Access the API key from secrets
 Api_key = st.secrets["Api_key"]
@@ -272,7 +277,8 @@ def main():
             "unique_feature": "Enter a unique feature of your company:",
             "suggested_names": "Here are some suggested names for your new company:",
             "no_suggestions": "Sorry, we couldn't generate any new names at the moment.",
-            "name_available": "The proposed name is available. You can use it for your new company."
+            "name_available": "The proposed name is available. You can use it for your new company.",
+            "city_case":"This input contains the name of a city or Emirate which is not acceptable, please re-enter another valid one."
         },
         "العربية": {
             "title": "مدقق ومولد توفر أسماء الشركات",
@@ -287,7 +293,8 @@ def main():
             "unique_feature": "أدخل ميزة فريدة لشركتك:",
             "suggested_names": "إليك بعض الأسماء المقترحة لشركتك الجديدة:",
             "no_suggestions": "عذرًا، لم نتمكن من إنشاء أي أسماء جديدة في الوقت الحالي.",
-            "name_available": "الاسم المقترح متاح. يمكنك استخدامه لشركتك الجديدة."
+            "name_available": "الاسم المقترح متاح. يمكنك استخدامه لشركتك الجديدة.",
+            "city_case":"هذا الأسم غالبا يحتوي علي اسم مدينة او امارة - أعد ادخال اسم جديد"
         }
     }
 
@@ -345,6 +352,9 @@ def main():
                     display_alerts(suggestions)
                 else:
                     st.error(lang["no_suggestions"])
+        # Approaching city name input
+        elif any(city_name.lower() in proposed_name for city_name in emirates_and_cities_en_ar):
+            st.warning(lang["city_case"])
         else:
             # Name is available
             st.success(lang["name_available"])
